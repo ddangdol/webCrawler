@@ -21,6 +21,20 @@
 ## 추가조건
 * 다음 실행시, 이미 수집된 내용은 제외하고 새로운 글만 수집합니다.
 * Non-Block을 활용해서 가능한한 빠르게 수집합니다.
+
 ## Requirements
 * Node 10.11.0
 * axios 0.18.0
+
+## 설치방법
+```shell
+> npm install
+```
+
+## 실행방법
+```shell
+> npm start
+```
+
+## 결과확인
+결과는 root에 output.json 파일로 저장된다.
