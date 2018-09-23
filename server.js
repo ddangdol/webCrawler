@@ -1,7 +1,7 @@
 const parsers = require('./parsers/parsers.js');
 const requests = require('./requests/requests.js');
-const { outputFilename } = require('./parsers/constans');
-const { saveOutputFile } = require('./parsers/utils');
+const { outputFilename, mapFilename } = require('./parsers/constans');
+const { saveOutputFile, readOutputFile, loadUrlMap } = require('./parsers/utils');
 
 const limitPage = 3;
 const limitPosts = 12;
@@ -27,7 +27,9 @@ function parsePostUrl(responses) {
 
   const promises = [];
   postUrls.forEach(function(postUrl) {
-    promises.push(requests.makePromiseForGet(postUrl));
+    if (!urlMap.get(postUrl)) {
+      promises.push(requests.makePromiseForGet(postUrl));
+    }
   });
   requests.requestPosts(promises, parsePosts);
 }
@@ -35,13 +37,16 @@ function parsePostUrl(responses) {
 function parsePosts(responses) {
   console.log('call parsePost!!');
 
-  let result = [];
   responses.forEach(function(response) {
     let post = parsers.parsePost(response.data);
-    post.url = response.config.url;
-    result.push(post);
+    const postUrl = response.config.url;
+    console.log(postUrl);
+    post.url = postUrl;
+    posts.push(post);
   });
-  saveOutputFile(outputFilename, JSON.stringify(result));
+  saveOutputFile(outputFilename, JSON.stringify(posts));
 }
 
+let posts = readOutputFile(outputFilename);
+const urlMap = loadUrlMap(posts);
 requests.requestUrl('http://newspeppermint.com/', parsePageUrl);

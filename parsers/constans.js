@@ -32,4 +32,5 @@ module.exports = {
   startWithCategoryWord,
   endWithCategoryWord,
   outputFilename,
+  mapFilename,
 }

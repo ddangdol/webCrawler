@@ -58,6 +58,19 @@ function saveOutputFile(filename, data) {
   fs.writeFileSync(filename, data, 'utf8');
 }
 
+function readOutputFile(filename) {
+  const data = fs.readFileSync(filename);
+  return JSON.parse(data.toString());
+}
+
+function loadUrlMap(posts) {
+  const urlMap = new Map();
+  posts.forEach(function (item) {
+    urlMap.set(item.url, true);
+  });
+  return urlMap;
+}
+
 module.exports = {
   substringWithWord,
   substringWithWordThenReturnEndPosition,
@@ -65,4 +78,6 @@ module.exports = {
   substringAllWithWord,
   convertDateFormat,
   saveOutputFile,
+  readOutputFile,
+  loadUrlMap,
 };
