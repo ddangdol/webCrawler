@@ -1,7 +1,9 @@
+const fs = require('fs');
+
 function multiSubstringWithWord(targetHtml, startWithWord, endWithWord, limit) {
   const results = [];
   let currentIndex = 0;
-  for (let count = 0; count < limit; count++) {
+  for (let count = 0; count < limit-1; count++) {
     targetHtml = targetHtml.substring(currentIndex);
     currentIndex = substringWithWordThenReturnEndPosition(targetHtml, results, startWithWord, endWithWord);
   }
@@ -52,10 +54,15 @@ function prefixZeroForOneDigit(digit) {
   return digit;
 }
 
+function saveOutputFile(filename, data) {
+  fs.writeFileSync(filename, data, 'utf8');
+}
+
 module.exports = {
   substringWithWord,
   substringWithWordThenReturnEndPosition,
   multiSubstringWithWord,
   substringAllWithWord,
   convertDateFormat,
+  saveOutputFile,
 };

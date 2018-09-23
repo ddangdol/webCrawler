@@ -16,6 +16,8 @@ const endWithDateWord = '&';
 const startWithCategoryWord = 'rel=\"category tag\">';
 const endWithCategoryWord = '<';
 
+const outputFilename = 'output.json';
+
 module.exports = {
   startWithPaginationWord,
   endWithPaginationWord,
@@ -29,4 +31,5 @@ module.exports = {
   endWithDateWord,
   startWithCategoryWord,
   endWithCategoryWord,
+  outputFilename,
 }

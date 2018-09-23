@@ -11,3 +11,28 @@ exports.requestUrl = function requestUrl(url, success) {
       console.log('error :', error);
     });
 };
+
+exports.makePromiseForGet = function makePromiseForGet(url) {
+  return axios.get(url);
+};
+
+exports.requestPages = function requestAll(promises, firstPageResponse, callback) {
+  axios.all(promises)
+    .then(function(response) {
+      response.push(firstPageResponse);
+      callback(response);
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+};
+
+exports.requestPosts = function requestPosts(promises, callback) {
+  axios.all(promises)
+    .then(function(response) {
+      callback(response);
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+}

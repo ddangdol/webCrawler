@@ -1,5 +1,7 @@
 const parsers = require('./parsers/parsers.js');
 const requests = require('./requests/requests.js');
+const { outputFilename } = require('./parsers/constans');
+const { saveOutputFile } = require('./parsers/utils');
 
 const limitPage = 3;
 const limitPosts = 12;
@@ -9,26 +11,37 @@ function parsePageUrl(response) {
   const paginationHtml = parsers.parsePagination(response.data);
   const pageUrls = parsers.parsePageUrlsWithLimit(paginationHtml, limitPage);
 
+  const promises = [];
   pageUrls.forEach(function(pageUrl) {
-    requests.requestUrl(pageUrl, parsePostUrl);
+    promises.push(requests.makePromiseForGet(pageUrl));
   });
-  parsePostUrl(response);
+  requests.requestPages(promises, response, parsePostUrl);
 }
 
-function parsePostUrl(response) {
+function parsePostUrl(responses) {
   console.log('call parsePostUrl!!');
-  const postUrls = parsers.parsePostUrlsWithLimit(response.data, limitPosts);
-
-  postUrls.forEach(function(postUrl) {
-    requests.requestUrl(postUrl, parsePost);
+  let postUrls = [];
+  responses.forEach(function(response) {
+    postUrls = postUrls.concat(parsers.parsePostUrlsWithLimit(response.data, limitPosts));
   });
+
+  const promises = [];
+  postUrls.forEach(function(postUrl) {
+    promises.push(requests.makePromiseForGet(postUrl));
+  });
+  requests.requestPosts(promises, parsePosts);
 }
 
-function parsePost(response) {
+function parsePosts(responses) {
   console.log('call parsePost!!');
-  let post = parsers.parsePost(response.data);
-  post.url = response.config.url;
-  console.log(post);
+
+  let result = [];
+  responses.forEach(function(response) {
+    let post = parsers.parsePost(response.data);
+    post.url = response.config.url;
+    result.push(post);
+  });
+  saveOutputFile(outputFilename, JSON.stringify(result));
 }
 
 requests.requestUrl('http://newspeppermint.com/', parsePageUrl);
