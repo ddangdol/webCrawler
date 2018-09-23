@@ -8,12 +8,11 @@
 ```json
 [
     {
-        url: "http://newspeppermint.com/2018/09/11/world-not-bad/",
-        writer: "jisukim",
-        date: "2018-09-12",
-        category: ["IT", "칼럼"]
+        "url": "http://newspeppermint.com/2018/09/11/world-not-bad/",
+        "writer": "jisukim",
+        "date": "2018-09-12",
+        "category": ["IT", "칼럼"]
     },
-    ....
 ]
 ```
 * 순서대로 수집할 필요는 없지만, 3페이지까지 빠진 내용이 있으면 안됩니다.
