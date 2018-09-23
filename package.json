@@ -1,0 +1,25 @@
+{
+  "name": "webcrawler",
+  "version": "1.0.0",
+  "description": "web crawler",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ddangdol/webCrawler.git"
+  },
+  "keywords": [
+    "crawler"
+  ],
+  "author": "Yeongseok Jang <ddangdol@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ddangdol/webCrawler/issues"
+  },
+  "homepage": "https://github.com/ddangdol/webCrawler#readme",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}
